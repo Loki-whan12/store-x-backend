@@ -1,0 +1,35 @@
+# Python Bytecode Files
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+venv/
+.env
+
+# Flask-Migrate
+migrations/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+
+# OS-specific Files
+.DS_Store
+Thumbs.db
+
+# Python Egg Info
+*.egg-info/
+*.egg
+
+# Log Files
+*.log
+
+# Database Files
+*.sqlite3
+
+# Test Coverage Reports
+.coverage
+htmlcov/
+
+# Configuration Files
+config.py

@@ -10,6 +10,7 @@ class Config:
     JSON_SORT_KEYS = False
     TEMPLATES_AUTO_RELOAD = True
     DEBUG = os.environ.get('DEBUG', True)
+    CORS_ORIGINS = os.getenv('CORS_ORIGINS', '*')
 
 class DevelopmentConfig(Config):
     DEBUG = True

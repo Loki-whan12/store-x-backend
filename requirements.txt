@@ -2,3 +2,5 @@ flask
 flask-sqlalchemy
 psycopg2-binary
 flask-cors
+Flask-Migrate
+python-dotenv
