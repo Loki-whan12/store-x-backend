@@ -4,7 +4,6 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from app.config import Config
 from dotenv import load_dotenv
-import os
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,8 +24,15 @@ def create_app(config_class=Config):
     cors_origins = app.config.get('CORS_ORIGINS', '*')
     CORS(app, resources={r"/*": {"origins": cors_origins}})
     
+    # Import models to ensure they are registered with SQLAlchemy
+    from app.models import User, Product, Seller, Admin, UnapprovedProduct, ArchivedProduct, Order, OrderItem, AdminActivity, AdminNotification, SellerActivity, SellerNotification, DeletedProduct
+    
     # Register blueprints
-    from app.routes import user_bp, seller_bp, admin_bp, product_bp
+    from app.routes.user_routes import user_bp
+    from app.routes.seller_routes import seller_bp
+    from app.routes.admin_routes import admin_bp
+    from app.routes.product_routes import product_bp
+
     app.register_blueprint(user_bp, url_prefix='/api/users')
     app.register_blueprint(seller_bp, url_prefix='/api/sellers')
     app.register_blueprint(admin_bp, url_prefix='/api/admins')

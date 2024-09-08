@@ -1,22 +1,25 @@
 from flask import Blueprint, request, jsonify
-from app.models.product import Product
 from app import db
+from app.models.product import Product
 
-bp = Blueprint('product_routes', __name__)
+product_bp = Blueprint('product_bp', __name__)
 
-@bp.route('/products', methods=['GET'])
+@product_bp.route('/products', methods=['GET'])
 def get_products():
     products = Product.query.all()
-    return jsonify([product.to_dict() for product in products])
+    return jsonify([product.to_dict() for product in products]), 200
 
-@bp.route('/products/<int:product_id>', methods=['GET'])
+@product_bp.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     product = Product.query.get_or_404(product_id)
-    return jsonify(product.to_dict())
+    return jsonify(product.to_dict()), 200
 
-@bp.route('/products', methods=['POST'])
+@product_bp.route('/products', methods=['POST'])
 def create_product():
     data = request.get_json()
+    if 'name' not in data or 'price' not in data:
+        return jsonify({'message': 'Name and price are required'}), 400
+    
     new_product = Product(
         name=data['name'],
         description=data.get('description'),
@@ -28,19 +31,26 @@ def create_product():
     db.session.commit()
     return jsonify(new_product.to_dict()), 201
 
-@bp.route('/products/<int:product_id>', methods=['PUT'])
+@product_bp.route('/products/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     product = Product.query.get_or_404(product_id)
     data = request.get_json()
-    product.name = data.get('name', product.name)
-    product.description = data.get('description', product.description)
-    product.price = data.get('price', product.price)
-    product.category_id = data.get('category_id', product.category_id)
-    product.seller_id = data.get('seller_id', product.seller_id)
+    
+    if 'name' in data:
+        product.name = data['name']
+    if 'description' in data:
+        product.description = data['description']
+    if 'price' in data:
+        product.price = data['price']
+    if 'category_id' in data:
+        product.category_id = data['category_id']
+    if 'seller_id' in data:
+        product.seller_id = data['seller_id']
+    
     db.session.commit()
-    return jsonify(product.to_dict())
+    return jsonify(product.to_dict()), 200
 
-@bp.route('/products/<int:product_id>', methods=['DELETE'])
+@product_bp.route('/products/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
     db.session.delete(product)
