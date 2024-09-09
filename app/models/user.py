@@ -7,7 +7,7 @@ class User(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(50), unique=True, nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=False, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -19,6 +19,7 @@ class User(db.Model):
             'last_name': self.last_name,
             'username': self.username,
             'email': self.email,
+            'password': self.password,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
