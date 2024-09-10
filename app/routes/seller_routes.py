@@ -16,7 +16,7 @@ def get_sellers():
 
 # Route to get a specific seller by username
 # GET /sellers/username/<username>
-@seller_bp.route('/sellers/username/<string:username>', methods=['GET'])
+@seller_bp.route('/get-seller/<string:username>', methods=['GET'])
 def get_seller_by_username(username):
     # Fetch a seller by username or return a 404 if not found
     seller = Seller.query.filter_by(username=username).first_or_404()
@@ -67,7 +67,7 @@ def create_seller():
 
 # Route to update an existing seller by username
 # PUT /sellers/username/<username>
-@seller_bp.route('/update-seller/username/<string:username>', methods=['PUT'])
+@seller_bp.route('/update-seller/<string:username>', methods=['PUT'])
 def update_seller_by_username(username):
     # Retrieve the user by username
     user = User.query.filter_by(username=username).first()
