@@ -29,26 +29,33 @@ def get_seller_by_username(username):
 def create_seller():
     # Parse JSON data from the request
     data = request.get_json()
-    # Check if the 'username' is provided, else return an error
-    if 'username' not in data:
-        return jsonify({'message': 'Username is required'}), 400
+
+    # Check if the required fields are provided
+    if 'username' not in data or 'seller_name' not in data or 'password' not in data:
+        return jsonify({'message': 'Username, seller name, and password are required'}), 400
+
     # Retrieve the user by username
     user = User.query.filter_by(username=data['username']).first()
     if not user:
         return jsonify({'message': 'User not found'}), 404
+
     # Check if a seller with this username already exists
     existing_seller = Seller.query.filter_by(username=data['username']).first()
     if existing_seller:
         return jsonify({'message': 'Seller with this username already exists'}), 400
+
     # Create a new Seller object with the provided data
     new_seller = Seller(
+        seller_id=user.user_id,  # Use user_id from the User model
         username=data['username'],
-        company_name=data.get('company_name'),
-        business_license_number=data.get('business_license_number')
+        seller_name=data['seller_name'],
+        password=data['password']
     )
+
     # Add the new seller to the session and commit it to the database
     db.session.add(new_seller)
     db.session.commit()
+
     # Return the newly created seller details
     return jsonify(new_seller.to_dict()), 201
 
