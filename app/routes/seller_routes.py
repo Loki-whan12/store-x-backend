@@ -46,7 +46,7 @@ def create_seller():
 
     # Create a new Seller object with the provided data
     new_seller = Seller(
-        seller_id=user.user_id,  # Use user_id from the User model
+        seller_id=user.user_id,
         username=data['username'],
         seller_name=data['seller_name'],
         password=data['password']
@@ -95,12 +95,11 @@ def update_seller_by_username(username):
 
 # Route to delete a seller by username
 # DELETE /sellers/username/<username>
-@seller_bp.route('/sellers/username/<string:username>', methods=['DELETE'])
+@seller_bp.route('/sellers/<string:username>', methods=['DELETE'])
 def delete_seller_by_username(username):
     # Fetch the seller by username or return a 404 if not found
     seller = Seller.query.filter_by(username=username).first_or_404()
     # Delete the seller from the database
     db.session.delete(seller)
     db.session.commit()
-    # Return a 204 No Content response indicating successful deletion
     return '', 204
