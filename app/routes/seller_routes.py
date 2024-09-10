@@ -7,7 +7,7 @@ seller_bp = Blueprint('seller_bp', __name__)
 
 # Route to get all sellers
 # GET /sellers
-@seller_bp.route('/sellers', methods=['GET'])
+@seller_bp.route('/get-all-sellers', methods=['GET'])
 def get_sellers():
     # Fetch all sellers from the database
     sellers = Seller.query.all()
@@ -25,7 +25,7 @@ def get_seller_by_username(username):
 
 # Route to create a new seller
 # POST /sellers
-@seller_bp.route('/sellers', methods=['POST'])
+@seller_bp.route('/add-sellers', methods=['POST'])
 def create_seller():
     # Parse JSON data from the request
     data = request.get_json()
@@ -61,7 +61,7 @@ def create_seller():
 
 # Route to update an existing seller by username
 # PUT /sellers/username/<username>
-@seller_bp.route('/sellers/username/<string:username>', methods=['PUT'])
+@seller_bp.route('/update-seller/username/<string:username>', methods=['PUT'])
 def update_seller_by_username(username):
     # Retrieve the user by username
     user = User.query.filter_by(username=username).first()
@@ -95,7 +95,7 @@ def update_seller_by_username(username):
 
 # Route to delete a seller by username
 # DELETE /sellers/username/<username>
-@seller_bp.route('/sellers/<string:username>', methods=['DELETE'])
+@seller_bp.route('/delete-seller/<string:username>', methods=['DELETE'])
 def delete_seller_by_username(username):
     # Fetch the seller by username or return a 404 if not found
     seller = Seller.query.filter_by(username=username).first_or_404()
