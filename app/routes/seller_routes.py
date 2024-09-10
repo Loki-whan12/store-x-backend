@@ -19,8 +19,9 @@ def get_sellers():
 @seller_bp.route('/get-seller/<string:username>', methods=['GET'])
 def get_seller_by_username(username):
     # Fetch a seller by username or return a 404 if not found
-    seller = Seller.query.filter_by(username=username).first_or_404()
-    # Return the seller details in JSON format
+    seller = Seller.query.filter_by(username=username).first()
+    if seller in None:
+        return jsonify({'message': 'Seller not found'}), 404
     return jsonify(seller.to_dict()), 200
 
 # Route to create a new seller
