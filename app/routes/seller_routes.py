@@ -23,8 +23,14 @@ def get_seller_by_username(username):
     # Return the seller details in JSON format
     return jsonify(seller.to_dict()), 200
 
+from flask import Blueprint, request, jsonify
+from app import db
+from app.models.user import User
+from app.models.seller import Seller
+
+seller_bp = Blueprint('seller_bp', __name__)
+
 # Route to create a new seller
-# POST /sellers
 @seller_bp.route('/add-seller', methods=['POST'])
 def create_seller():
     # Parse JSON data from the request
@@ -53,12 +59,18 @@ def create_seller():
         has_been_approved=False
     )
 
-    # Add the new seller to the session and commit it to the database
+    # Add the new seller to the session
     db.session.add(new_seller)
+
+    # Update the user to indicate they have created a seller account
+    user.has_created_seller_account = True
+
+    # Commit the changes to the database
     db.session.commit()
 
     # Return the newly created seller details
     return jsonify(new_seller.to_dict()), 201
+
 
 # Route to update an existing seller by username
 # PUT /sellers/username/<username>
