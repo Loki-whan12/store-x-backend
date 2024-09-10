@@ -49,7 +49,8 @@ def create_seller():
         seller_id=user.user_id,
         username=data['username'],
         seller_name=data['seller_name'],
-        password=data['password']
+        password=data['password'],
+        has_been_approved=False
     )
 
     # Add the new seller to the session and commit it to the database

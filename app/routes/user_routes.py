@@ -42,7 +42,8 @@ def create_user():
         last_name=data['last_name'],
         username=data['username'],
         email=data['email'],
-        password=data['password']
+        password=data['password'],
+        has_created_seller_account=False
     )
     
     db.session.add(new_user)
