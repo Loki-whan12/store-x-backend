@@ -7,7 +7,7 @@ class Seller(db.Model):
     __tablename__ = 'sellers'
     seller_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True, nullable=False)
     username = db.Column(db.String(50), db.ForeignKey('users.username'), unique=True, nullable=False)
-    seller_name = db.Column(db.String(255), nullable=False)
+    seller_name = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
