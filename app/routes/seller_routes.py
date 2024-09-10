@@ -25,7 +25,7 @@ def get_seller_by_username(username):
 
 # Route to create a new seller
 # POST /sellers
-@seller_bp.route('/add-sellers', methods=['POST'])
+@seller_bp.route('/add-seller', methods=['POST'])
 def create_seller():
     # Parse JSON data from the request
     data = request.get_json()
