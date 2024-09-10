@@ -9,6 +9,7 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=False, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    has_created_seller_account = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -20,6 +21,7 @@ class User(db.Model):
             'username': self.username,
             'email': self.email,
             'password': self.password,
+            'has_created_seller_account': self.has_created_seller_account,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
