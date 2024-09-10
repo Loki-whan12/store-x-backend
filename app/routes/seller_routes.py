@@ -20,7 +20,7 @@ def get_sellers():
 def get_seller_by_username(username):
     # Fetch a seller by username or return a 404 if not found
     seller = Seller.query.filter_by(username=username).first()
-    if seller in None:
+    if seller is None:
         return jsonify({'message': 'Seller not found'}), 404
     return jsonify(seller.to_dict()), 200
 
