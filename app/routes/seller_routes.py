@@ -23,13 +23,6 @@ def get_seller_by_username(username):
     # Return the seller details in JSON format
     return jsonify(seller.to_dict()), 200
 
-from flask import Blueprint, request, jsonify
-from app import db
-from app.models.user import User
-from app.models.seller import Seller
-
-seller_bp = Blueprint('seller_bp', __name__)
-
 # Route to create a new seller
 @seller_bp.route('/add-seller', methods=['POST'])
 def create_seller():
